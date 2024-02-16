@@ -4,12 +4,11 @@ const myMap = {
 	map: {},
 	markers: {},
 
-	buildMap() {
+	createMap() {
 		this.map = L.map('map', {
 		center: this.coordinates,
 		zoom: 11,
 		});
-		// add openstreetmap tiles
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution:
 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -22,7 +21,6 @@ const myMap = {
 		.openPopup()
 	},
 
-	// add business markers
 	addMarkers() {
 		for (var i = 0; i < this.businesses.length; i++) {
 		this.markers = L.marker([
@@ -35,8 +33,7 @@ const myMap = {
 	},
 }
 
-
-async function getCoords(){
+async function getCoordinates(){
 	const pos = await new Promise((resolve, reject) => {
 		navigator.geolocation.getCurrentPosition(resolve, reject)
 	});
@@ -75,9 +72,9 @@ function processBusinesses(data) {
 }
 
 window.onload = async () => {
-	const coords = await getCoords()
+	const coords = await getCoordinates()
 	myMap.coordinates = coords
-	myMap.buildMap()
+	myMap.createMap()
 }
 
 document.getElementById('submit').addEventListener('click', async (event) => {
